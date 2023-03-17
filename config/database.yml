@@ -25,13 +25,13 @@ default: &default
 
 development:
   <<: *default
-  database: pc_api_development
+  database: trans_link_api_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: pc_api
+  #username: trans_link_api
 
   # The password associated with the postgres role (username).
   #password:
@@ -59,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: pc_api_test
+  database: trans_link_api_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -83,6 +83,6 @@ test:
 #
 production:
   <<: *default
-  database: pc_api_production
-  username: pc_api
-  password: <%= ENV["PC_API_DATABASE_PASSWORD"] %>
+  database: trans_link_api_production
+  username: trans_link_api
+  password: <%= ENV["TRANS_LINK_API_DATABASE_PASSWORD"] %>
