@@ -8,6 +8,8 @@
 #
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+DEVISE_AUTHENTICATION_KEY = :email
+
 Devise.setup do |config|
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise.jwt_secret_key!
@@ -50,7 +52,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [:email]
+  config.authentication_keys = [DEVISE_AUTHENTICATION_KEY]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the

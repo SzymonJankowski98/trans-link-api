@@ -4,6 +4,10 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
+require "devise/jwt/test_helpers"
+
+Dir[Rails.root.join("test/support/**/*.rb")].each { require _1 }
+
 module ActiveSupport
   class TestCase
     include FactoryBot::Syntax::Methods

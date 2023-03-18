@@ -61,6 +61,23 @@ module V1
       # def after_inactive_sign_up_path_for(resource)
       #   super(resource)
       # end
+
+      private
+
+      def respond_with(resource, _opts = {})
+        resource.persisted? ? register_success : register_failure
+      end
+
+      def register_success
+        render json: resource,
+               serializer: V1::UserSerializer,
+               root: "user",
+               status: :created
+      end
+
+      def register_failure
+        render_errors(resource.errors)
+      end
     end
   end
 end

@@ -11,9 +11,18 @@ module V1
       # end
 
       # POST /resource/sign_in
-      # def create
-      #   super
-      # end
+      def create
+        self.resource = warden.authenticate(auth_options)
+
+        if resource.present? && sign_in(resource_name, resource)
+          render json: resource,
+                 serializer: V1::UserSerializer,
+                 root: "user",
+                 status: :created
+        else
+          render_errors error_message, status: :unauthorized
+        end
+      end
 
       # DELETE /resource/sign_out
       # def destroy
@@ -26,6 +35,14 @@ module V1
       # def configure_sign_in_params
       #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
       # end
+
+      private
+
+      def error_message
+        translation_key = "devise.failure.#{Devise.paranoid ? 'invalid' : 'not_found_in_database'}"
+
+        I18n.t(translation_key, authentication_keys: DEVISE_AUTHENTICATION_KEY)
+      end
     end
   end
 end
