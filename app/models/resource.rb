@@ -20,6 +20,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Resource < ApplicationRecord
+  self.inheritance_column = :_type_disabled
+
   VISIBILITIES = [
     PUBLIC = "public",
     PRIVATE = "private"
