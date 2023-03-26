@@ -170,6 +170,7 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pagy (6.0.2)
     parallel (1.22.1)
     parser (3.2.1.1)
       ast (~> 2.4.1)
@@ -277,6 +278,7 @@ DEPENDENCIES
   devise-jwt
   dry-schema
   factory_bot_rails
+  pagy
   pg (~> 1.1)
   puma (~> 5.0)
   rack-cors

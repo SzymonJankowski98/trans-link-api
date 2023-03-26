@@ -12,6 +12,7 @@ gem "active_model_serializers"
 gem "devise"
 gem "devise-jwt"
 gem "dry-schema"
+gem "pagy"
 gem "rack-cors"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
