@@ -21,6 +21,18 @@ jobs:
   test:
     name: Tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - "5432:5432"
+    env:
+      RAILS_ENV: test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }} 
+      DATABASE_URL: postgres://postgres:@localhost:5432/trans_link_api_test
     steps:
       - uses: actions/checkout@v3
       - name: 
@@ -29,4 +41,7 @@ jobs:
           ruby-version: "3.2.1"
           bundler-cache: true
       - name: Run tests
-        run: bundle exec rake
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+          bundle exec rake
