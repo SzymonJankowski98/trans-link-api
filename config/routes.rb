@@ -15,6 +15,8 @@ Rails.application.routes.draw do
         post "/sign_out", action: :destroy
       end
     end
+
+    resources :learning_texts, only: %i[index]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
