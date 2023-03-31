@@ -27,4 +27,11 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal resources, user.resources
   end
+
+  test "#has_many learning_texts returns accociated records" do
+    author = create(:user)
+    learning_texts = create_list(:learning_text, 2, author:)
+
+    assert_equal learning_texts, author.learning_texts
+  end
 end

@@ -26,4 +26,5 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtDenylist
 
   has_many :resources, dependent: :destroy
+  has_many :learning_texts, dependent: :destroy
 end
