@@ -2,17 +2,30 @@
 
 module V1
   class LearningTextsController < ApplicationController
+    before_action :validate_params!
+
     def index
-      render json: learning_texts,
+      render json: learning_texts.records,
              each_serializer: V1::LearningTextSerializer,
              root: "learning_texts",
-             status: :ok
+             meta: learning_texts.metadata
     end
 
     private
 
+    def pagination_params
+      safe_params.slice(:page, :per_page).to_h.symbolize_keys
+    end
+
+    def finder_params
+      safe_params.slice(:sort_column, :sort_direction, :id)
+    end
+
     def learning_texts
-      LearningText.all
+      @learning_texts ||= begin
+        finder_result = LearningTexts::Finder.new(**finder_params).call
+        Pagination.new(finder_result, **pagination_params).call
+      end
     end
   end
 end
