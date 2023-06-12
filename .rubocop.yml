@@ -5,6 +5,10 @@ require:
 AllCops:
   NewCops: enable
 
+Layout/LineLength:
+  Max: 100
+  AllowedPatterns: ['^(\s*#)']
+
 Style/Documentation:
   Enabled: false
 
