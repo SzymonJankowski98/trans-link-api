@@ -14,13 +14,19 @@ class ApplicationController < ActionController::API
   end
 
   def validate_params!(schema = nil)
-    schema ||= "::#{controller_name.camelize}::#{action_name.camelize}Schema".constantize
+    schema ||= action_schema
     validated_params = schema.new.call(params.to_unsafe_hash)
 
     if validated_params.failure?
-      return render_errors(validated_params.errors.to_h, status: :bad_request)
+      return render_errors(validated_params.errors.to_h, status: :bad_request) # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
     end
 
     @safe_params = params.permit(validated_params.to_h.keys)
+  end
+
+  private
+
+  def action_schema
+    "::#{controller_name.camelize}::#{action_name.camelize}Schema".constantize
   end
 end

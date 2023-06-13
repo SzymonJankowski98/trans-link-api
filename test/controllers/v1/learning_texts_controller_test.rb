@@ -15,14 +15,11 @@ module V1
     end
 
     test "#index returns error when params are invalid" do
-      resources = create_list(:learning_text, 3).reverse
-
       get v1_learning_texts_path(params: { page: "one" })
-
-      assert_response :bad_request
 
       expected_error = { "errors" => { "page" => ["must be an integer"] } }
 
+      assert_response :bad_request
       assert_equal expected_error, response.parsed_body
     end
 

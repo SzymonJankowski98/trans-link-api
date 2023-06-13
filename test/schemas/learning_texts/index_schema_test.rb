@@ -14,7 +14,7 @@ module LearningTexts
       result = IndexSchema.new.call(invalid_params)
 
       assert_predicate result, :failure?
-      assert_equal expected_error, result.errors.to_h
+      assert_equal expected_error, result.errors.to_h # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
     end
 
     private

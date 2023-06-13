@@ -5,30 +5,30 @@ require "test_helper"
 module LearningTexts
   class FinderTest < ActiveSupport::TestCase
     test "returns results applying default order and sorting" do
-      learning_text_1 = create(:learning_text, created_at: 1.day.ago)
-      learning_text_2 = create(:learning_text, created_at: 1.day.from_now)
+      learning_text1 = create(:learning_text, created_at: 1.day.ago)
+      learning_text2 = create(:learning_text, created_at: 1.day.from_now)
 
       result = Finder.new.call
 
-      assert_equal [learning_text_2, learning_text_1], result
+      assert_equal [learning_text2, learning_text1], result
     end
 
     test "returns ascending results" do
-      learning_text_1 = create(:learning_text, created_at: 1.day.ago)
-      learning_text_2 = create(:learning_text, created_at: 1.day.from_now)
+      learning_text1 = create(:learning_text, created_at: 1.day.ago)
+      learning_text2 = create(:learning_text, created_at: 1.day.from_now)
 
       result = Finder.new(sort_direction: "asc").call
 
-      assert_equal [learning_text_1, learning_text_2], result
+      assert_equal [learning_text1, learning_text2], result
     end
 
     test "returns sorted results" do
-      learning_text_1 = create(:learning_text, title: "cba")
-      learning_text_2 = create(:learning_text, title: "abc")
+      learning_text1 = create(:learning_text, title: "cba")
+      learning_text2 = create(:learning_text, title: "abc")
 
       result = Finder.new(sort_column: "title").call
 
-      assert_equal [learning_text_1, learning_text_2], result
+      assert_equal [learning_text1, learning_text2], result
     end
 
     test "returns filtered results" do
