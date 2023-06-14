@@ -47,4 +47,28 @@ class LearningTextTest < ActiveSupport::TestCase
       assert_equal blank_error, learning_text.errors.details[attribute]&.first
     end
   end
+
+  test "validates inclusion of level" do
+    learning_text = build(:learning_text, level: "Master")
+    blank_error = { error: :inclusion, value: "Master" }
+
+    assert_not learning_text.valid?
+    assert_equal blank_error, learning_text.errors.details[:level]&.first
+  end
+
+  test "validates inclusion of visibility" do
+    learning_text = build(:learning_text, visibility: "None")
+    blank_error = { error: :inclusion, value: "None" }
+
+    assert_not learning_text.valid?
+    assert_equal blank_error, learning_text.errors.details[:visibility]&.first
+  end
+
+  test "validates inclusion of access_key_enabled" do
+    learning_text = build(:learning_text, access_key_enabled: nil)
+    blank_error = { error: :inclusion, value: nil }
+
+    assert_not learning_text.valid?
+    assert_equal blank_error, learning_text.errors.details[:access_key_enabled]&.first
+  end
 end

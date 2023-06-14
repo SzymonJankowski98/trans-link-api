@@ -31,6 +31,11 @@
 FactoryBot.define do
   factory :learning_text do
     association :author, factory: :user
+    association :base_language, factory: :language
+    association :translation_language, factory: :language
     title { "Title" }
+    visibility { "public" }
+    level { "C1" }
+    access_key_enabled { false }
   end
 end
