@@ -13,4 +13,9 @@
 class Language < ApplicationRecord
   validates :name, presence: true
   validates :code, presence: true
+
+  has_many :learning_texts,
+           class_name: "LearningText",
+           foreign_key: :language_id,
+           dependent: :destroy
 end

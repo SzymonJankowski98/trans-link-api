@@ -22,4 +22,11 @@ class LanguageTest < ActiveSupport::TestCase
       assert_equal blank_error, learning_text.errors.details[attribute]&.first
     end
   end
+
+  test "#has_many learning_texts returns accociated records" do
+    language = create(:language)
+    learning_texts = create_list(:learning_text, 2, language: language)
+
+    assert_equal learning_texts, language.learning_texts
+  end
 end
