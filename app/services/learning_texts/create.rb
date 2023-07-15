@@ -45,12 +45,9 @@ module LearningTexts
     end
 
     def create_base_learning_text
-      @base_learning_text = LearningText.create(**base_learning_text_params)
-      unless base_learning_text.persisted?
-        return Failure(base_learning_text.errors.full_messages.to_sentence)
-      end
-
-      Success()
+      LearningText.create_with_result(**base_learning_text_params)
+                  .or { Failure(_1.errors.full_messages.to_sentence) }
+                  .fmap { @base_learning_text = _1 }
     end
 
     def base_learning_text_params
@@ -60,12 +57,9 @@ module LearningTexts
     end
 
     def create_translation
-      @translation_learning_text = LearningText.create(**translation_params)
-      unless translation_learning_text.persisted?
-        return Failure(translation_learning_text.errors.full_messages.to_sentence)
-      end
-
-      Success()
+      LearningText.create_with_result(**translation_params)
+                  .or { Failure(_1.errors.full_messages.to_sentence) }
+                  .fmap { @translation_learning_text = _1 }
     end
 
     def translation_params
@@ -80,18 +74,19 @@ module LearningTexts
     def create_sentences
       response = Success()
       action_params[:sentences].each_with_index do |sentence_params, order|
-        sentence = base_learning_text.sentences.create(text: sentence_params[:base], order:)
-        unless sentence.persisted?
-          response = Failure(sentence.errors.full_messages.to_sentence)
-          break
-        end
+        base_learning_text
+          .sentences.create_with_result(text: sentence_params[:base], order:)
+          .or do
+            response = Failure(_1.errors.full_messages.to_sentence)
+            break
+          end
 
-        translated_sentence =
-          translation_learning_text.sentences.create(text: sentence_params[:translation], order:)
-        unless translated_sentence.persisted?
-          response = Failure(translated_sentence.errors.full_messages.to_sentence)
-          break
-        end
+        translation_learning_text
+          .sentences.create_with_result(text: sentence_params[:translation], order:)
+          .or do
+            response = Failure(_1.errors.full_messages.to_sentence)
+            break
+          end
       end
 
       response
