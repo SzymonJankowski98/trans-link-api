@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :learning_texts, only: %i[index]
+    resources :learning_texts, only: %i[index create]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

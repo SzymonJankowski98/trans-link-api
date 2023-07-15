@@ -21,7 +21,7 @@ class ApplicationController < ActionController::API
       return render_errors(validated_params.errors.to_h, status: :bad_request) # rubocop:disable Rails/DeprecatedActiveModelErrorsMethods
     end
 
-    @safe_params = params.permit(validated_params.to_h.keys)
+    @safe_params = validated_params.to_h
   end
 
   private

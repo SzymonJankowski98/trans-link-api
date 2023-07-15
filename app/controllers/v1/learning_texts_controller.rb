@@ -11,7 +11,24 @@ module V1
              meta: learning_texts.metadata
     end
 
+    def create
+      response = create_action
+
+      if response.success?
+        render json: response.value!,
+               serializer: V1::LearningTextSerializer,
+               status: :created,
+               root: "learning_text"
+      else
+        render_errors response.failure, status: :unprocessable_entity
+      end
+    end
+
     private
+
+    def create_action
+      LearningTexts::Create.new(safe_params[:learning_text], current_user).call
+    end
 
     def pagination_params
       safe_params.slice(:page, :per_page).to_h.symbolize_keys
