@@ -47,7 +47,7 @@ class LearningTextTest < ActiveSupport::TestCase
 
   test "#belongs_to base_learning_text returns associated record" do
     base_learning_text = create(:learning_text)
-    translation_learning_text = create(:learning_text, base_learning_text: base_learning_text)
+    translation_learning_text = create(:learning_text, base_learning_text:)
 
     assert_equal base_learning_text, translation_learning_text.base_learning_text
   end

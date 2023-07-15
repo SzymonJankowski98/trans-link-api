@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UpdateLearningTextsAssociations < ActiveRecord::Migration[7.0]
   def change
     rename_column :learning_texts, :base_language_id, :language_id

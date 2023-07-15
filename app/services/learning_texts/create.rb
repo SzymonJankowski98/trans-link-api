@@ -25,7 +25,7 @@ module LearningTexts
 
     attr_reader :action_params,
                 :author,
-                :base_language, 
+                :base_language,
                 :translation_language,
                 :base_learning_text,
                 :translation_learning_text
@@ -55,7 +55,7 @@ module LearningTexts
 
     def base_learning_text_params
       action_params
-        .slice(:title, :level, :visibility,)
+        .slice(:title, :level, :visibility)
         .merge(language: base_language, author:)
     end
 
@@ -71,22 +71,22 @@ module LearningTexts
     def translation_params
       action_params
         .slice(:level, :visibility)
-        .merge(title: action_params[:translation_title], 
-               language: translation_language, 
+        .merge(title: action_params[:translation_title],
+               language: translation_language,
                author:,
                base_learning_text:)
     end
 
     def create_sentences
       response = Success()
-      action_params[:sentences].each_with_index  do |sentence_params, order|
+      action_params[:sentences].each_with_index do |sentence_params, order|
         sentence = base_learning_text.sentences.create(text: sentence_params[:base], order:)
         unless sentence.persisted?
           response = Failure(sentence.errors.full_messages.to_sentence)
           break
         end
 
-        translated_sentence = 
+        translated_sentence =
           translation_learning_text.sentences.create(text: sentence_params[:translation], order:)
         unless translated_sentence.persisted?
           response = Failure(translated_sentence.errors.full_messages.to_sentence)

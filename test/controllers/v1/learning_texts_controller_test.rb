@@ -45,7 +45,7 @@ module V1
 
     test "#create returns unprocessable_entity when action fails" do
       mock_author
-  
+
       action_params = create_params
       action_params[:learning_text][:base_language] = "ab"
 
@@ -76,7 +76,7 @@ module V1
           translation_language: "en",
           sentences: [
             { base: "Sentence 1", translation: "Translated sentence 1" },
-            { base: "Sentence 2", translation: "Translated sentence 2" },
+            { base: "Sentence 2", translation: "Translated sentence 2" }
           ]
         }
       }

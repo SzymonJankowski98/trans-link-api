@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 languages = [
-  { code: "en", name: "english"},
+  { code: "en", name: "english" },
   { code: "pl", name: "polish" },
   { code: "de", name: "german" }
 ]

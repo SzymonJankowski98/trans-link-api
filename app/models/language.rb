@@ -16,6 +16,5 @@ class Language < ApplicationRecord
 
   has_many :learning_texts,
            class_name: "LearningText",
-           foreign_key: :language_id,
            dependent: :destroy
 end

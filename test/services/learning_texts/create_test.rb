@@ -8,9 +8,11 @@ module LearningTexts
       assert_difference -> { LearningText.count }, +2 do
         assert_difference -> { Sentence.count }, +4 do
           response = Create.new(action_params, author).call
+
           assert_predicate response, :success?
 
           learning_text = response.value!
+
           assert_equal "title", learning_text.title
           assert_equal "B1", learning_text.level
           assert_equal "private", learning_text.visibility
@@ -20,8 +22,9 @@ module LearningTexts
             assert_equal "Sentence #{index + 1}", sentence.text
             assert_equal index, sentence.order
           end
-          
+
           translation = learning_text.translations.first
+
           assert_equal "translated title", translation.title
           assert_equal "B1", translation.level
           assert_equal "private", translation.visibility
@@ -50,7 +53,7 @@ module LearningTexts
     end
 
     test "fails when both languages are the same" do
-      response = Create.new({ base_language: "en",  translation_language: "en" }, author).call
+      response = Create.new({ base_language: "en", translation_language: "en" }, author).call
 
       assert_predicate response, :failure?
       assert_equal "Base and translation languages have to be different", response.failure
@@ -80,7 +83,7 @@ module LearningTexts
           { base: nil, transaction: "Translated text" }
         ]
       }
-      
+
       assert_no_difference -> { LearningText.count } do
         assert_no_difference -> { Sentence.count } do
           response = Create.new(action_params.merge(sentences), author).call
@@ -103,7 +106,7 @@ module LearningTexts
         translation_language: "en",
         sentences: [
           { base: "Sentence 1", translation: "Translated sentence 1" },
-          { base: "Sentence 2", translation: "Translated sentence 2" },
+          { base: "Sentence 2", translation: "Translated sentence 2" }
         ]
       }
     end

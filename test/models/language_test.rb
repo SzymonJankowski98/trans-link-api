@@ -25,7 +25,7 @@ class LanguageTest < ActiveSupport::TestCase
 
   test "#has_many learning_texts returns accociated records" do
     language = create(:language)
-    learning_texts = create_list(:learning_text, 2, language: language)
+    learning_texts = create_list(:learning_text, 2, language:)
 
     assert_equal learning_texts, language.learning_texts
   end

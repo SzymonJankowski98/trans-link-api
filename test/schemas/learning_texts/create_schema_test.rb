@@ -33,7 +33,7 @@ module LearningTexts
             translation_language: "en",
             sentences: [
               { base: "Sentence 1", translation: "Translated sentence 1" },
-              { base: "Sentence 2", translation: "Translated sentence 2" },
+              { base: "Sentence 2", translation: "Translated sentence 2" }
             ],
             extra_param: "extra param"
           }
@@ -69,12 +69,12 @@ module LearningTexts
     def expected_error
       {
         learning_text: {
-          title: ["must be a string"], 
-          translation_title: ["must be a string"], 
-          sentences: { 
-            0 => { base: ["is missing"] }, 
-            1 => { translation: ["is missing"] } 
-          } 
+          title: ["must be a string"],
+          translation_title: ["must be a string"],
+          sentences: {
+            0 => { base: ["is missing"] },
+            1 => { translation: ["is missing"] }
+          }
         }
       }
     end
