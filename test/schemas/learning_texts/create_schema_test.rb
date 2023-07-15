@@ -28,7 +28,7 @@ module LearningTexts
             title: "title",
             translation_title: "translated title",
             level: "B1",
-            visibility: "privates",
+            visibility: "private",
             base_language: "pl",
             translation_language: "en",
             sentences: [
