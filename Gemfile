@@ -49,6 +49,7 @@ gem "bootsnap", require: false
 group :development, :test do
   gem "byebug"
   gem "factory_bot_rails"
+  gem "mocha"
   gem "rubocop", require: false
   gem "rubocop-minitest", require: false
   gem "rubocop-rails", require: false
