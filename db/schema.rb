@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_172613) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_15_110951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,14 +34,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_172613) do
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "base_language_id", null: false
-    t.bigint "translation_language_id", null: false
+    t.bigint "language_id", null: false
     t.string "visibility", default: "public", null: false
     t.string "level", null: false
     t.string "access_key"
     t.boolean "access_key_enabled", default: false, null: false
-    t.index ["base_language_id"], name: "index_learning_texts_on_base_language_id"
-    t.index ["translation_language_id"], name: "index_learning_texts_on_translation_language_id"
+    t.bigint "base_learning_text_id"
+    t.index ["base_learning_text_id"], name: "index_learning_texts_on_base_learning_text_id"
+    t.index ["language_id"], name: "index_learning_texts_on_language_id"
     t.index ["user_id"], name: "index_learning_texts_on_user_id"
   end
 
@@ -55,9 +55,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_172613) do
   end
 
   create_table "sentences", force: :cascade do |t|
-    t.integer "order", null: false
+    t.integer "order"
     t.bigint "learning_text_id", null: false
-    t.text "text", null: false
+    t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["learning_text_id"], name: "index_sentences_on_learning_text_id"
@@ -75,8 +75,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_172613) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "learning_texts", "languages", column: "base_language_id"
-  add_foreign_key "learning_texts", "languages", column: "translation_language_id"
+  add_foreign_key "learning_texts", "languages"
+  add_foreign_key "learning_texts", "learning_texts", column: "base_learning_text_id"
   add_foreign_key "learning_texts", "users"
   add_foreign_key "resources", "users"
   add_foreign_key "sentences", "learning_texts"
