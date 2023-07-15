@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_174749) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_172613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_174749) do
     t.index ["user_id"], name: "index_resources_on_user_id"
   end
 
+  create_table "sentences", force: :cascade do |t|
+    t.integer "order", null: false
+    t.bigint "learning_text_id", null: false
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["learning_text_id"], name: "index_sentences_on_learning_text_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -70,4 +79,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_174749) do
   add_foreign_key "learning_texts", "languages", column: "translation_language_id"
   add_foreign_key "learning_texts", "users"
   add_foreign_key "resources", "users"
+  add_foreign_key "sentences", "learning_texts"
 end
