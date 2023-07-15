@@ -12,7 +12,7 @@
 #
 FactoryBot.define do
   factory :language do
-    name { "English" }
-    code { "EN" }
+    name { "english" }
+    code { "en" }
   end
 end

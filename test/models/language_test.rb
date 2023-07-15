@@ -29,4 +29,10 @@ class LanguageTest < ActiveSupport::TestCase
 
     assert_equal learning_texts, language.learning_texts
   end
+
+  test "database containes default languages" do
+    assert Language.find_by(code: "en")
+    assert Language.find_by(code: "pl")
+    assert Language.find_by(code: "de")
+  end
 end
