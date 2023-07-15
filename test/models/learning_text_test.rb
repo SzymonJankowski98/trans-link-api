@@ -45,11 +45,25 @@ class LearningTextTest < ActiveSupport::TestCase
     assert_equal language, learning_text.language
   end
 
+  test "#belongs_to base_learning_text returns associated record" do
+    base_learning_text = create(:learning_text)
+    translation_learning_text = create(:learning_text, base_learning_text: base_learning_text)
+
+    assert_equal base_learning_text, translation_learning_text.base_learning_text
+  end
+
   test "#has_many sentences returns accociated records" do
     learning_text = create(:learning_text)
     sentences = create_list(:sentence, 2, learning_text:)
 
     assert_equal sentences, learning_text.sentences
+  end
+
+  test "#has_many translations returns accociated records" do
+    base_learning_text = create(:learning_text)
+    translation_learning_texts = create_list(:learning_text, 2, base_learning_text:)
+
+    assert_equal translation_learning_texts, base_learning_text.translations
   end
 
   test "validates presence of attributes" do

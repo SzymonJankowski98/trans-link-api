@@ -38,7 +38,7 @@ FactoryBot.define do
     access_key_enabled { false }
 
     trait :translation do
-      association :base_learning_text
+      association :base_learning_text, factory: :learning_text
     end
   end
 end

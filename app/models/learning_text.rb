@@ -49,10 +49,14 @@ class LearningText < ApplicationRecord
   belongs_to :language
   belongs_to :base_learning_text,
              class_name: "LearningText",
-             foreign_key: :base_learning_text,
+             foreign_key: :base_learning_text_id,
              optional: true
 
   has_many :sentences, dependent: :destroy
+  has_many :translations,
+            class_name: "LearningText",
+            foreign_key: :base_learning_text_id,
+            dependent: :destroy
 
   validates :title, presence: true
   validates :access_key_enabled, inclusion: [true, false]

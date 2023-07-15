@@ -12,6 +12,8 @@ module ActiveSupport
   class TestCase
     include FactoryBot::Syntax::Methods
 
+    Rails.application.load_seed
+
     # Run tests in parallel with specified workers
     parallelize(workers: :number_of_processors)
 
