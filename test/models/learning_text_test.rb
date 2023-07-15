@@ -45,6 +45,13 @@ class LearningTextTest < ActiveSupport::TestCase
     assert_equal language, learning_text.language
   end
 
+  test "#has_many sentences returns accociated records" do
+    learning_text = create(:learning_text)
+    sentences = create_list(:sentence, 2, learning_text:)
+
+    assert_equal sentences, learning_text.sentences
+  end
+
   test "validates presence of attributes" do
     %i[title].each do |attribute|
       learning_text = build(:learning_text, attribute => nil)

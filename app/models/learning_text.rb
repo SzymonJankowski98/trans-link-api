@@ -52,6 +52,8 @@ class LearningText < ApplicationRecord
              foreign_key: :base_learning_text,
              optional: true
 
+  has_many :sentences, dependent: :destroy
+
   validates :title, presence: true
   validates :access_key_enabled, inclusion: [true, false]
   validates :visibility, inclusion: { in: VISIBILITIES }
