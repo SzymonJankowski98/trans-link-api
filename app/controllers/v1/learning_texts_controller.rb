@@ -2,7 +2,7 @@
 
 module V1
   class LearningTextsController < ApplicationController
-    before_action :validate_params!
+    before_action :validate_params!, only: %i[index create]
 
     def index
       render json: learning_texts.records,
@@ -25,7 +25,19 @@ module V1
       end
     end
 
+    def destroy
+      if learning_text.destroy
+        render status: :no_content
+      else
+        render_errors learning_text.errors.details, status: :unprocessable_entity
+      end
+    end
+
     private
+
+    def learning_text
+      @learning_text ||= rescuable_find(LearningText, params[:id])
+    end
 
     def create_action
       LearningTexts::Create.new(safe_params[:learning_text], current_user).call

@@ -5,12 +5,12 @@ require "test_helper"
 module V1
   class LearningTextsControllerTest < ActionDispatch::IntegrationTest
     test "#index returns learning texts" do
-      resources = create_list(:learning_text, 3).reverse
+      learning_texts = create_list(:learning_text, 3).reverse
 
       get v1_learning_texts_path(params: { page: 1, extra_param: 1 })
 
       assert_response :ok
-      assert_equal resources.pluck(:id), response.parsed_body["learning_texts"].pluck("id")
+      assert_equal learning_texts.pluck(:id), response.parsed_body["learning_texts"].pluck("id")
       assert_predicate index_response_schema.call(response.parsed_body), :success?
     end
 
@@ -65,6 +65,31 @@ module V1
       expected_error = { "errors" => { "base" => ["This base language is not supported"] } }
 
       assert_response :unprocessable_entity
+      assert_equal expected_error, response.parsed_body
+    end
+
+    test "#destroy deletes learning text with its associations" do
+      base_learning_text = create(:learning_text)
+      learning_text = create(:learning_text, :with_access_key, base_learning_text:)
+      create(:sentence, learning_text:)
+      translation = create(:learning_text, :with_access_key, base_learning_text: learning_text)
+      create(:sentence, learning_text: translation)
+
+      assert_difference -> { LearningText.count }, -2 do
+        assert_difference -> { Sentence.count }, -2 do
+          delete v1_learning_text_path(learning_text.id)
+        end
+      end
+
+      assert_response :no_content
+    end
+
+    test "#destroy returns not_found when learning text doesn't exist" do
+      delete v1_learning_text_path(-1)
+
+      expected_error = { "errors" => { "base" => ["Not found"] } }
+
+      assert_response :not_found
       assert_equal expected_error, response.parsed_body
     end
 

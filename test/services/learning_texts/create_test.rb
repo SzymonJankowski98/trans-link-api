@@ -112,7 +112,7 @@ module LearningTexts
     end
 
     def author
-      create(:user)
+      @author ||= create(:user)
     end
   end
 end

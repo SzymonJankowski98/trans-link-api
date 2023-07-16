@@ -1,16 +1,31 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  module ActiveRecord
+    class RescuableRecordNotFound < ActiveRecord::RecordNotFound; end
+  end
+
   include ActionController::MimeResponds
 
-  attr_reader :safe_params
-
   respond_to :json
+  rescue_from ActiveRecord::RescuableRecordNotFound, with: :render_not_found
+
+  attr_reader :safe_params
 
   def render_errors(message, status: :unprocessable_entity)
     message = { base: [message] } if message.is_a? String
 
     render json: { errors: message }, status:
+  end
+
+  def render_not_found
+    render_errors("Not found", status: :not_found)
+  end
+
+  def rescuable_find(model, id)
+    model.find(id)
+  rescue ActiveRecord::RecordNotFound
+    raise ActiveRecord::RescuableRecordNotFound
   end
 
   def validate_params!(schema = nil)
