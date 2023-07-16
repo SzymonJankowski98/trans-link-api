@@ -22,7 +22,9 @@ module LearningTexts
     def valid_params
       {
         id: [1],
-        title: "title",
+        search: "title",
+        base_language: ["en"],
+        translation_language: ["pl"],
         page: 1,
         per_page: 25,
         sort_column: "column",
@@ -34,7 +36,9 @@ module LearningTexts
     def invalid_params
       {
         id: "id",
-        title: [1],
+        search: [1],
+        base_language: ["en"],
+        translation_language: ["pl"],
         page: "1",
         per_page: "25",
         sort_column: 1,
@@ -45,7 +49,7 @@ module LearningTexts
     def expected_error
       {
         id: ["must be an array"],
-        title: ["must be a string"],
+        search: ["must be a string"],
         sort_column: ["must be a string"],
         sort_direction: ["must be a string"]
       }

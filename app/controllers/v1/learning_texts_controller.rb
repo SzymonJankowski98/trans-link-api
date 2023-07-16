@@ -61,8 +61,10 @@ module V1
 
     def learning_texts
       @learning_texts ||= begin
-        finder_result = LearningTexts::Finder.new(**finder_params).call
-        Pagination.new(finder_result, **pagination_params).call
+        base_learning_text_ids =
+          LearningTexts::Finder.new(**finder_params).call.pluck(:base_learning_text_id)
+        learning_texts = LearningText.where(id: base_learning_text_ids)
+        Pagination.new(learning_texts, **pagination_params).call
       end
     end
   end

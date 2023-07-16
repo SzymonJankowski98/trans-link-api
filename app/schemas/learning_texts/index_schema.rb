@@ -4,7 +4,9 @@ module LearningTexts
   class IndexSchema < Dry::Schema::Params
     define do
       optional(:id).array(:integer)
-      optional(:title).filled(:string)
+      optional(:base_language).array(:string)
+      optional(:translation_language).array(:string)
+      optional(:search).filled(:string)
       optional(:page).filled(:integer)
       optional(:per_page).filled(:integer)
       optional(:sort_column).filled(:string)

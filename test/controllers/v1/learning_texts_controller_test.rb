@@ -5,12 +5,13 @@ require "test_helper"
 module V1
   class LearningTextsControllerTest < ActionDispatch::IntegrationTest
     test "#index returns learning texts" do
-      learning_texts = create_list(:learning_text, 3, :translation).reverse
+      learning_texts = create_list(:learning_text, 3, :translation)
 
-      get v1_learning_texts_path(params: { page: 1, extra_param: 1 })
+      get v1_learning_texts_path(params: { page: 1, extra_param: 1, base_language: ["en"] })
 
       assert_response :ok
-      assert_equal learning_texts.pluck(:id), response.parsed_body["learning_texts"].pluck("id")
+      assert_equal learning_texts.map(&:base_learning_text).pluck(:id),
+                   response.parsed_body["learning_texts"].pluck("id")
       assert_predicate index_response_schema.call(response.parsed_body), :success?
     end
 
