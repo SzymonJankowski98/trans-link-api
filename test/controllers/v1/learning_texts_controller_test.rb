@@ -88,7 +88,7 @@ module V1
     test "#create returns unauthorized when is not authorized" do
       post v1_learning_texts_path(params: {})
 
-      expected_error =  { "error" => "You need to sign in or sign up before continuing." }
+      expected_error = { "error" => "You need to sign in or sign up before continuing." }
 
       assert_response :unauthorized
       assert_equal expected_error, response.parsed_body
@@ -140,7 +140,7 @@ module V1
     test "#destroy returns unauthorized when is not authorized" do
       delete v1_learning_text_path(-1)
 
-      expected_error =  { "error" => "You need to sign in or sign up before continuing." }
+      expected_error = { "error" => "You need to sign in or sign up before continuing." }
 
       assert_response :unauthorized
       assert_equal expected_error, response.parsed_body
@@ -151,7 +151,6 @@ module V1
     def get_auth_token(user)
       Devise::JWT::TestHelpers.auth_headers({}, user)
     end
-    
 
     def create_params
       {
