@@ -8,7 +8,7 @@ module V1
       user = create(:user)
       serialization = UserSerializer.new(user).as_json
 
-      assert_predicate Schemas::User::SCHEMA.call(serialization), :success?
+      assert_predicate ResponseSchemas::User.new.call(serialization), :success?
     end
   end
 end

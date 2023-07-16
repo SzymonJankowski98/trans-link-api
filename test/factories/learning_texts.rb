@@ -40,5 +40,10 @@ FactoryBot.define do
     trait :translation do
       association :base_learning_text, factory: :learning_text
     end
+
+    trait :with_access_key do
+      access_key_enabled { true }
+      access_key { "1234abcd" }
+    end
   end
 end

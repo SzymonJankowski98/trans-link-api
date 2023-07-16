@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Schemas
-  module Resource
-    SCHEMA = Dry::Schema.JSON do
+module ResponseSchemas
+  class Resource < Dry::Schema::JSON
+    define do
       required(:id).filled(:integer)
       required(:user_id).filled(:integer)
       required(:type).filled(:string)

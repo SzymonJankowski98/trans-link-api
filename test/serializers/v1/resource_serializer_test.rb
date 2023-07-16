@@ -8,7 +8,7 @@ module V1
       resource = create(:resource)
       serialization = ResourceSerializer.new(resource).as_json
 
-      assert_predicate Schemas::Resource::SCHEMA.call(serialization), :success?
+      assert_predicate ResponseSchemas::Resource.new.call(serialization), :success?
     end
   end
 end

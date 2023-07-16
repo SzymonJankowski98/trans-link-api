@@ -11,7 +11,7 @@ module V1
 
       assert_response :ok
       assert_equal resources.pluck(:id), response.parsed_body["learning_texts"].pluck("id")
-      assert_predicate resources_response_schema.call(response.parsed_body), :success?
+      assert_predicate index_response_schema.call(response.parsed_body), :success?
     end
 
     test "#index returns error when params are invalid" do
@@ -26,9 +26,20 @@ module V1
     test "#create creates learning texts successfully" do
       mock_author
 
-      post v1_learning_texts_path(params: create_params)
+      assert_difference -> { LearningText.count }, +2 do
+        assert_difference -> { Sentence.count }, +4 do
+          post v1_learning_texts_path(params: create_params)
+        end
+      end
 
       assert_response :created
+      assert_predicate create_response_schema.call(response.parsed_body), :success?
+
+      body = response.parsed_body["learning_text"]
+
+      assert_equal 2, body["sentences"].count
+      assert_equal 1, body["translations"].count
+      assert_equal 2, body["translations"][0]["sentences"].count
     end
 
     test "#create returns bad_request when params are invalid" do
@@ -82,10 +93,18 @@ module V1
       }
     end
 
-    def resources_response_schema
+    def index_response_schema
       Dry::Schema.Params do
         required(:learning_texts).array(:hash).schema do
-          Schemas::LearningText::SCHEMA
+          ResponseSchemas::LearningText
+        end
+      end
+    end
+
+    def create_response_schema
+      Dry::Schema.Params do
+        required(:learning_text).schema do
+          ResponseSchemas::LearningText
         end
       end
     end

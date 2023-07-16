@@ -55,7 +55,7 @@ module V1
 
       def user_response_schema
         Dry::Schema.Params do
-          required(:user).filled(Schemas::User::SCHEMA)
+          required(:user).filled(ResponseSchemas::User.new.type_schema)
         end
       end
     end

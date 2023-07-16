@@ -18,6 +18,7 @@ module V1
         render json: response.value!,
                serializer: V1::LearningTextSerializer,
                status: :created,
+               include: ["sentences", "translations.sentences"],
                root: "learning_text"
       else
         render_errors response.failure, status: :unprocessable_entity

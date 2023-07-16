@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Schemas
-  module User
-    SCHEMA = Dry::Schema.JSON do
+module ResponseSchemas
+  class User < Dry::Schema::JSON
+    define do
       required(:id).filled(:integer)
       required(:email).filled(:string)
     end
