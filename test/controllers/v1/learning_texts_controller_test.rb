@@ -5,7 +5,7 @@ require "test_helper"
 module V1
   class LearningTextsControllerTest < ActionDispatch::IntegrationTest
     test "#index returns learning texts" do
-      learning_texts = create_list(:learning_text, 3).reverse
+      learning_texts = create_list(:learning_text, 3, :translation).reverse
 
       get v1_learning_texts_path(params: { page: 1, extra_param: 1 })
 

@@ -80,7 +80,7 @@ module LearningTexts
     test "fails when sentence params are incorrect" do
       sentences = {
         sentences: [
-          { base: nil, transaction: "Translated text" }
+          { base: nil, translation: "Translated text" }
         ]
       }
 

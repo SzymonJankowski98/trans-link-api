@@ -58,6 +58,9 @@ class LearningText < ApplicationRecord
            inverse_of: :base_learning_text,
            dependent: :destroy
 
+  scope :base_texts, -> { where(base_learning_text: nil) }
+  scope :translations, -> { where.not(base_learning_text: nil) }
+
   validates :title, presence: true
   validates :access_key_enabled, inclusion: [true, false]
   validates :visibility, inclusion: { in: VISIBILITIES }

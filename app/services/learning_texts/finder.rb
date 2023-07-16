@@ -7,13 +7,17 @@ module LearningTexts
 
     attribute :sort_column, :string
     attribute :sort_direction, :string
+    attribute :search, :string
     attribute :id, array: true
-
-    attribute :base_scope
+    attribute :base_language, array: true
+    attribute :translation_language, array: true
 
     def call
       scope
 
+      apply_search
+      apply_base_language_filter
+      apply_translation_language_filter
       apply_filters
       apply_order
     end
@@ -39,6 +43,31 @@ module LearningTexts
       end
     end
 
+    def apply_search
+      return unless search
+
+      @scope = scope.where("learning_texts.title ILIKE ?", "%#{search}%")
+    end
+
+    def apply_base_language_filter
+      return unless base_language
+
+      base_learning_text_ids =
+        LearningText
+        .base_texts
+        .joins(:language)
+        .where(languages: { code: base_language })
+        .ids
+
+      @scope = scope.where(base_learning_text_id: base_learning_text_ids)
+    end
+
+    def apply_translation_language_filter
+      return unless translation_language
+
+      @scope = scope.joins(:language).where(languages: { code: translation_language })
+    end
+
     def apply_order
       @scope = scope.order(final_sort_column => final_sort_direction)
     end
@@ -52,7 +81,7 @@ module LearningTexts
     end
 
     def scope
-      @scope ||= base_scope || LearningText.all
+      @scope ||= LearningText.translations
     end
   end
 end
