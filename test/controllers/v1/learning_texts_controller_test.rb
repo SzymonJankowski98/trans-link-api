@@ -53,11 +53,11 @@ module V1
     end
 
     test "#create creates learning texts successfully" do
-      mock_author
+      headers = get_auth_token(create(:user))
 
       assert_difference -> { LearningText.count }, +2 do
         assert_difference -> { Sentence.count }, +4 do
-          post v1_learning_texts_path(params: create_params)
+          post v1_learning_texts_path(params: create_params), headers:
         end
       end
 
@@ -72,10 +72,12 @@ module V1
     end
 
     test "#create returns bad_request when params are invalid" do
+      headers = get_auth_token(create(:user))
+
       action_params = create_params
       action_params[:learning_text][:title] = nil
 
-      post v1_learning_texts_path(params: action_params)
+      post(v1_learning_texts_path(params: action_params), headers:)
 
       expected_error = { "errors" => { "learning_text" => { "title" => ["must be filled"] } } }
 
@@ -83,13 +85,22 @@ module V1
       assert_equal expected_error, response.parsed_body
     end
 
+    test "#create returns unauthorized when is not authorized" do
+      post v1_learning_texts_path(params: {})
+
+      expected_error =  { "error" => "You need to sign in or sign up before continuing." }
+
+      assert_response :unauthorized
+      assert_equal expected_error, response.parsed_body
+    end
+
     test "#create returns unprocessable_entity when action fails" do
-      mock_author
+      headers = get_auth_token(create(:user))
 
       action_params = create_params
       action_params[:learning_text][:base_language] = "ab"
 
-      post v1_learning_texts_path(params: action_params)
+      post(v1_learning_texts_path(params: action_params), headers:)
 
       expected_error = { "errors" => { "base" => ["This base language is not supported"] } }
 
@@ -98,6 +109,8 @@ module V1
     end
 
     test "#destroy deletes learning text with its associations" do
+      headers = get_auth_token(create(:user))
+
       base_learning_text = create(:learning_text)
       learning_text = create(:learning_text, :with_access_key, base_learning_text:)
       create(:sentence, learning_text:)
@@ -106,7 +119,7 @@ module V1
 
       assert_difference -> { LearningText.count }, -2 do
         assert_difference -> { Sentence.count }, -2 do
-          delete v1_learning_text_path(learning_text.id)
+          delete v1_learning_text_path(learning_text.id), headers:
         end
       end
 
@@ -114,7 +127,9 @@ module V1
     end
 
     test "#destroy returns not_found when learning text doesn't exist" do
-      delete v1_learning_text_path(-1)
+      headers = get_auth_token(create(:user))
+
+      delete(v1_learning_text_path(-1), headers:)
 
       expected_error = { "errors" => { "base" => ["Not found"] } }
 
@@ -122,13 +137,21 @@ module V1
       assert_equal expected_error, response.parsed_body
     end
 
+    test "#destroy returns unauthorized when is not authorized" do
+      delete v1_learning_text_path(-1)
+
+      expected_error =  { "error" => "You need to sign in or sign up before continuing." }
+
+      assert_response :unauthorized
+      assert_equal expected_error, response.parsed_body
+    end
+
     private
 
-    # TODO: Remove when authentication in place
-    def mock_author
-      user = create(:user)
-      ApplicationController.any_instance.expects(:current_user).returns(user).at_least_once
+    def get_auth_token(user)
+      Devise::JWT::TestHelpers.auth_headers({}, user)
     end
+    
 
     def create_params
       {

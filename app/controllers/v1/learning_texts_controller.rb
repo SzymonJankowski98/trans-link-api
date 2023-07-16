@@ -2,6 +2,7 @@
 
 module V1
   class LearningTextsController < ApplicationController
+    before_action :authenticate_user!, except: %i[show index]
     before_action :validate_params!, only: %i[index create]
 
     def index
