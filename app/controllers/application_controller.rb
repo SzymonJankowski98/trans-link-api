@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class ApplicationController < ActionController::API
-  module ActiveRecord
-    class RescuableRecordNotFound < ActiveRecord::RecordNotFound; end
-  end
+module ActiveRecord
+  class RescuableRecordNotFound < ActiveRecord::RecordNotFound; end
+end
 
+class ApplicationController < ActionController::API
   include ActionController::MimeResponds
 
   respond_to :json

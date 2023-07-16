@@ -23,6 +23,34 @@ module V1
       assert_equal expected_error, response.parsed_body
     end
 
+    test "#show returns learning text record" do
+      base_learning_text = create(:learning_text)
+      learning_text = create(:learning_text, :with_access_key, base_learning_text:)
+      create(:sentence, learning_text:)
+      translation = create(:learning_text, :with_access_key, base_learning_text: learning_text)
+      create(:sentence, learning_text: translation)
+
+      get v1_learning_text_path(learning_text.id)
+
+      assert_response :ok
+      assert_predicate create_response_schema.call(response.parsed_body), :success?
+
+      body = response.parsed_body["learning_text"]
+
+      assert_predicate body["sentences"], :present?
+      assert_predicate body["translations"], :present?
+      assert_predicate body["translations"][0]["sentences"], :present?
+    end
+
+    test "#show returns not_found when learning text doesn't exist" do
+      get v1_learning_text_path(-1)
+
+      expected_error = { "errors" => { "base" => ["Not found"] } }
+
+      assert_response :not_found
+      assert_equal expected_error, response.parsed_body
+    end
+
     test "#create creates learning texts successfully" do
       mock_author
 

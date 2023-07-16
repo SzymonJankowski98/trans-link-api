@@ -11,6 +11,14 @@ module V1
              meta: learning_texts.metadata
     end
 
+    def show
+      render json: learning_text,
+             serializer: V1::LearningTextSerializer,
+             status: :ok,
+             include: ["sentences", "translations.sentences"],
+             root: "learning_text"
+    end
+
     def create
       response = create_action
 
