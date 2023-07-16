@@ -55,6 +55,7 @@ class LearningText < ApplicationRecord
   has_many :translations,
            class_name: "LearningText",
            foreign_key: :base_learning_text_id,
+           inverse_of: :base_learning_text,
            dependent: :destroy
 
   validates :title, presence: true

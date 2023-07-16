@@ -14,3 +14,14 @@ Style/Documentation:
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+
+Layout/EndOfLine:
+  Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - 'test/**/*'
+
+Minitest/MultipleAssertions:
+  Exclude:
+    - 'test/**/*'

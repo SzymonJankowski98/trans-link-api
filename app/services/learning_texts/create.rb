@@ -3,7 +3,7 @@
 module LearningTexts
   class Create
     include Dry::Monads[:result]
-    include Dry::Monads::Do.for(:call)
+    include Dry::Monads::Do.for(:call, :fetch_languages)
 
     def initialize(action_params, author)
       @action_params = action_params
@@ -31,17 +31,24 @@ module LearningTexts
                 :translation_learning_text
 
     def fetch_languages
-      @base_language = Language.find_by(code: action_params[:base_language].downcase)
-      return Failure("This base language is not supported") if base_language.blank?
-
-      @translation_language = Language.find_by(code: action_params[:translation_language].downcase)
-      return Failure("This translation language is not supported") if translation_language.blank?
+      @base_language = yield fetch_base_language
+      @translation_language = yield fetch_translation_language
 
       if base_language == translation_language
         return Failure("Base and translation languages have to be different")
       end
 
       Success()
+    end
+
+    def fetch_base_language
+      Language.find_by_with_response(code: action_params[:base_language].downcase)
+              .or(Failure("This base language is not supported"))
+    end
+
+    def fetch_translation_language
+      Language.find_by_with_response(code: action_params[:translation_language].downcase)
+              .or(Failure("This translation language is not supported"))
     end
 
     def create_base_learning_text
@@ -71,20 +78,20 @@ module LearningTexts
                base_learning_text:)
     end
 
-    def create_sentences
+    def create_sentences # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       response = Success()
       action_params[:sentences].each_with_index do |sentence_params, order|
         base_learning_text
           .sentences.create_with_result(text: sentence_params[:base], order:)
-          .or do
-            response = Failure(_1.errors.full_messages.to_sentence)
+          .or do |failure|
+            response = Failure(failure.errors.full_messages.to_sentence)
             break
           end
 
         translation_learning_text
           .sentences.create_with_result(text: sentence_params[:translation], order:)
-          .or do
-            response = Failure(_1.errors.full_messages.to_sentence)
+          .or do |failure|
+            response = Failure(failure.errors.full_messages.to_sentence)
             break
           end
       end
