@@ -25,6 +25,5 @@ class User < ApplicationRecord
          :rememberable, :validatable, :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist
 
-  has_many :resources, dependent: :destroy
   has_many :learning_texts, dependent: :destroy
 end
