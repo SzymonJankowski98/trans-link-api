@@ -90,7 +90,8 @@ module V1
     end
 
     def finder_params
-      safe_params.slice(:sort_column, :sort_direction, :id)
+      safe_params.slice(:sort_column, :sort_direction, :id,
+                        :search, :base_language, :translation_language)
     end
 
     def learning_texts
