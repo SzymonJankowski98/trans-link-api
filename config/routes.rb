@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  apipie
+
   devise_for :users, skip: :all
 
   namespace :v1, defaults: { format: :json } do

@@ -5,6 +5,15 @@ module V1
     before_action :authenticate_user!, except: %i[show index]
     before_action :validate_params!, only: %i[index create]
 
+    api :GET, "/learning_texts", "List learning texts"
+    param :id, Array, of: Integer
+    param :search, String
+    param :base_language, Array, of: String, meta: { example: "[\"en\", \"pl\"]" }
+    param :translation_language, Array, of: String, meta: { example: "[\"en\", \"pl\"]" }
+    param :sort_direction, %w[desc asc]
+    param :sort_column, %w[title created_at]
+    param :page, Integer
+    param :per_page, Integer
     def index
       render json: learning_texts.records,
              each_serializer: V1::LearningTextSerializer,
@@ -12,6 +21,8 @@ module V1
              meta: learning_texts.metadata
     end
 
+    api :GET, "/learning_texts/:id", "Show a learning text"
+    error code: 404
     def show
       render json: learning_text,
              serializer: V1::LearningTextSerializer,
@@ -20,6 +31,23 @@ module V1
              root: "learning_text"
     end
 
+    api :POST, "/learning_texts", "Create a learning text"
+    description "Requires bearer token"
+    param :learning_text, Hash do
+      param :title, String
+      param :translation_title, String
+      param :level, LearningText::LEVELS
+      param :visibility, %w[private public]
+      param :base_language, String, meta: { example: "[\"en\", \"pl\"]" }
+      param :translation_language, String, meta: { example: "[\"en\", \"pl\"]" }
+      param :sentences, Array, of: Hash do
+        param :base, String
+        param :translation, String
+      end
+    end
+    error code: 400
+    error code: 401
+    error code: 422
     def create
       response = create_action
 
@@ -34,6 +62,11 @@ module V1
       end
     end
 
+    api :DELETE, "/learning_texts/:id", "Destroy a learning text"
+    description "Requires bearer token"
+    error code: 401
+    error code: 404
+    error code: 422
     def destroy
       if learning_text.destroy
         render status: :no_content

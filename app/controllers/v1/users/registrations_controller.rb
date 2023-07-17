@@ -12,6 +12,12 @@ module V1
       # end
 
       # POST /resource
+      api :POST, "/users", "Create a registration"
+      param :user, Hash do
+        param :email, String
+        param :password, String
+      end
+      error code: 422
       # def create
       #   super
       # end

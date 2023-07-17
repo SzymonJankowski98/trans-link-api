@@ -6,7 +6,7 @@ module LearningTexts
       required(:learning_text).hash do
         required(:title).filled(:string)
         required(:translation_title).filled(:string)
-        optional(:level).filled(:string)
+        required(:level).filled(:string)
         optional(:visibility).maybe(:string)
         optional(:base_language).filled(:string)
         optional(:translation_language).filled(:string)

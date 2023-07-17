@@ -11,6 +11,12 @@ module V1
       # end
 
       # POST /resource/sign_in
+      api :POST, "/users/sign_in", "Create a session"
+      param :user, Hash do
+        param :email, String
+        param :password, String
+      end
+      error code: 401
       def create
         self.resource = warden.authenticate(auth_options)
 
@@ -25,6 +31,11 @@ module V1
       end
 
       # DELETE /resource/sign_out
+      api :POST, "/users/sign_out", "Destroy a session"
+      param :user, Hash do
+        param :email, String
+        param :password, String
+      end
       # def destroy
       #   super
       # end

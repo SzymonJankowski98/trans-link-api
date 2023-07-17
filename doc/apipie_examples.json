@@ -1,0 +1,445 @@
+{
+  "learning_texts#create": [
+    {
+      "verb": "POST",
+      "path": "/v1/learning_texts",
+      "versions": [
+        "1"
+      ],
+      "query": "learning_text%5Bbase_language%5D=ab&learning_text%5Blevel%5D=B1&learning_text%5Bsentences%5D%5B%5D%5Bbase%5D=Sentence+1&learning_text%5Bsentences%5D%5B%5D%5Btranslation%5D=Translated+sentence+1&learning_text%5Bsentences%5D%5B%5D%5Bbase%5D=Sentence+2&learning_text%5Bsentences%5D%5B%5D%5Btranslation%5D=Translated+sentence+2&learning_text%5Btitle%5D=title&learning_text%5Btranslation_language%5D=en&learning_text%5Btranslation_title%5D=translated+title&learning_text%5Bvisibility%5D=private",
+      "request_data": "",
+      "response_data": {
+        "errors": {
+          "base": [
+            "This base language is not supported"
+          ]
+        }
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/v1/learning_texts",
+      "versions": [
+        "1"
+      ],
+      "query": "learning_text%5Bbase_language%5D=pl&learning_text%5Blevel%5D=B1&learning_text%5Bsentences%5D%5B%5D%5Bbase%5D=Sentence+1&learning_text%5Bsentences%5D%5B%5D%5Btranslation%5D=Translated+sentence+1&learning_text%5Bsentences%5D%5B%5D%5Bbase%5D=Sentence+2&learning_text%5Bsentences%5D%5B%5D%5Btranslation%5D=Translated+sentence+2&learning_text%5Btitle%5D=&learning_text%5Btranslation_language%5D=en&learning_text%5Btranslation_title%5D=translated+title&learning_text%5Bvisibility%5D=private",
+      "request_data": "",
+      "response_data": {
+        "errors": {
+          "learning_text": {
+            "title": [
+              "must be filled"
+            ]
+          }
+        }
+      },
+      "code": 400,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/v1/learning_texts",
+      "versions": [
+        "1"
+      ],
+      "query": "learning_text%5Bbase_language%5D=pl&learning_text%5Blevel%5D=B1&learning_text%5Bsentences%5D%5B%5D%5Bbase%5D=Sentence+1&learning_text%5Bsentences%5D%5B%5D%5Btranslation%5D=Translated+sentence+1&learning_text%5Bsentences%5D%5B%5D%5Bbase%5D=Sentence+2&learning_text%5Bsentences%5D%5B%5D%5Btranslation%5D=Translated+sentence+2&learning_text%5Btitle%5D=title&learning_text%5Btranslation_language%5D=en&learning_text%5Btranslation_title%5D=translated+title&learning_text%5Bvisibility%5D=private",
+      "request_data": "",
+      "response_data": {
+        "learning_text": {
+          "id": 10073,
+          "access_key": null,
+          "access_key_enabled": false,
+          "level": "B1",
+          "title": "title",
+          "visibility": "private",
+          "language_id": 1004,
+          "user_id": 58041,
+          "created_at": "2023-07-17T16:51:03.944+00:00",
+          "base_learning_text_id": null,
+          "translations": [
+            {
+              "id": 10074,
+              "access_key": null,
+              "access_key_enabled": false,
+              "level": "B1",
+              "title": "translated title",
+              "visibility": "private",
+              "language_id": 1003,
+              "user_id": 58041,
+              "created_at": "2023-07-17T16:51:03.946+00:00",
+              "base_learning_text_id": 10073,
+              "sentences": [
+                {
+                  "id": 2972,
+                  "order": 0,
+                  "text": "Translated sentence 1"
+                },
+                {
+                  "id": 2974,
+                  "order": 1,
+                  "text": "Translated sentence 2"
+                }
+              ]
+            }
+          ],
+          "sentences": [
+            {
+              "id": 2971,
+              "order": 0,
+              "text": "Sentence 1"
+            },
+            {
+              "id": 2973,
+              "order": 1,
+              "text": "Sentence 2"
+            }
+          ]
+        }
+      },
+      "code": 201,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "learning_texts#destroy": [
+    {
+      "verb": "DELETE",
+      "path": "/v1/learning_texts/10062",
+      "versions": [
+        "1"
+      ],
+      "query": null,
+      "request_data": null,
+      "response_data": null,
+      "code": 204,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "DELETE",
+      "path": "/v1/learning_texts/-1",
+      "versions": [
+        "1"
+      ],
+      "query": null,
+      "request_data": null,
+      "response_data": {
+        "errors": {
+          "base": [
+            "Not found"
+          ]
+        }
+      },
+      "code": 404,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "learning_texts#index": [
+    {
+      "verb": "GET",
+      "path": "/v1/learning_texts",
+      "versions": [
+        "1"
+      ],
+      "query": "base_language%5B%5D=en&extra_param=1&page=1",
+      "request_data": null,
+      "response_data": {
+        "learning_texts": [
+          {
+            "id": 10064,
+            "access_key": null,
+            "access_key_enabled": false,
+            "level": "C1",
+            "title": "Title",
+            "visibility": "public",
+            "language_id": 8740,
+            "user_id": 58030,
+            "created_at": "2023-07-17T16:51:03.458+00:00",
+            "base_learning_text_id": null,
+            "translations": [
+              {
+                "id": 10065,
+                "access_key": null,
+                "access_key_enabled": false,
+                "level": "C1",
+                "title": "Title",
+                "visibility": "public",
+                "language_id": 8739,
+                "user_id": 58029,
+                "created_at": "2023-07-17T16:51:03.461+00:00",
+                "base_learning_text_id": 10064
+              }
+            ],
+            "sentences": [
+
+            ]
+          },
+          {
+            "id": 10066,
+            "access_key": null,
+            "access_key_enabled": false,
+            "level": "C1",
+            "title": "Title",
+            "visibility": "public",
+            "language_id": 8742,
+            "user_id": 58032,
+            "created_at": "2023-07-17T16:51:03.477+00:00",
+            "base_learning_text_id": null,
+            "translations": [
+              {
+                "id": 10067,
+                "access_key": null,
+                "access_key_enabled": false,
+                "level": "C1",
+                "title": "Title",
+                "visibility": "public",
+                "language_id": 8741,
+                "user_id": 58031,
+                "created_at": "2023-07-17T16:51:03.480+00:00",
+                "base_learning_text_id": 10066
+              }
+            ],
+            "sentences": [
+
+            ]
+          },
+          {
+            "id": 10068,
+            "access_key": null,
+            "access_key_enabled": false,
+            "level": "C1",
+            "title": "Title",
+            "visibility": "public",
+            "language_id": 8744,
+            "user_id": 58034,
+            "created_at": "2023-07-17T16:51:03.498+00:00",
+            "base_learning_text_id": null,
+            "translations": [
+              {
+                "id": 10069,
+                "access_key": null,
+                "access_key_enabled": false,
+                "level": "C1",
+                "title": "Title",
+                "visibility": "public",
+                "language_id": 8743,
+                "user_id": 58033,
+                "created_at": "2023-07-17T16:51:03.500+00:00",
+                "base_learning_text_id": 10068
+              }
+            ],
+            "sentences": [
+
+            ]
+          }
+        ],
+        "meta": {
+          "previous_page": null,
+          "current_page": 1,
+          "next_page": null,
+          "total_pages": 1,
+          "total_count": 3
+        }
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "GET",
+      "path": "/v1/learning_texts",
+      "versions": [
+        "1"
+      ],
+      "query": "page=one",
+      "request_data": null,
+      "response_data": {
+        "errors": {
+          "page": [
+            "must be an integer"
+          ]
+        }
+      },
+      "code": 400,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "learning_texts#show": [
+    {
+      "verb": "GET",
+      "path": "/v1/learning_texts/-1",
+      "versions": [
+        "1"
+      ],
+      "query": null,
+      "request_data": null,
+      "response_data": {
+        "errors": {
+          "base": [
+            "Not found"
+          ]
+        }
+      },
+      "code": 404,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "GET",
+      "path": "/v1/learning_texts/10071",
+      "versions": [
+        "1"
+      ],
+      "query": null,
+      "request_data": null,
+      "response_data": {
+        "learning_text": {
+          "id": 10071,
+          "access_key": "1234abcd",
+          "access_key_enabled": true,
+          "level": "C1",
+          "title": "Title",
+          "visibility": "public",
+          "language_id": 8746,
+          "user_id": 58038,
+          "created_at": "2023-07-17T16:51:03.818+00:00",
+          "base_learning_text_id": 10070,
+          "translations": [
+            {
+              "id": 10072,
+              "access_key": "1234abcd",
+              "access_key_enabled": true,
+              "level": "C1",
+              "title": "Title",
+              "visibility": "public",
+              "language_id": 8747,
+              "user_id": 58039,
+              "created_at": "2023-07-17T16:51:03.832+00:00",
+              "base_learning_text_id": 10071,
+              "sentences": [
+                {
+                  "id": 2970,
+                  "order": 1,
+                  "text": "Example sentence."
+                }
+              ]
+            }
+          ],
+          "sentences": [
+            {
+              "id": 2969,
+              "order": 1,
+              "text": "Example sentence."
+            }
+          ]
+        }
+      },
+      "code": 200,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "registrations#create": [
+    {
+      "verb": "POST",
+      "path": "/v1/users",
+      "versions": [
+
+      ],
+      "query": "user%5Bemail%5D=test%40example.com&user%5Bpassword%5D=12345678",
+      "request_data": "",
+      "response_data": {
+        "user": {
+          "id": 58024,
+          "email": "test@example.com"
+        }
+      },
+      "code": 201,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/v1/users",
+      "versions": [
+
+      ],
+      "query": "user%5Bemail%5D=test%40example.com&user%5Bpassword%5D=123",
+      "request_data": "",
+      "response_data": {
+        "errors": {
+          "password": [
+            "is too short (minimum is 6 characters)"
+          ]
+        }
+      },
+      "code": 422,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ],
+  "sessions#create": [
+    {
+      "verb": "POST",
+      "path": "/v1/users/sign_in",
+      "versions": [
+        "1"
+      ],
+      "query": "user%5Bemail%5D=test%40example.com&user%5Bpassword%5D=wrong+password",
+      "request_data": "",
+      "response_data": {
+        "errors": {
+          "base": [
+            "Invalid email or password."
+          ]
+        }
+      },
+      "code": 401,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/v1/users/sign_in",
+      "versions": [
+        "1"
+      ],
+      "query": "user%5Bemail%5D=test%40example.com&user%5Bpassword%5D=12345678",
+      "request_data": "",
+      "response_data": {
+        "user": {
+          "id": 58021,
+          "email": "test@example.com"
+        }
+      },
+      "code": 201,
+      "show_in_doc": 1,
+      "recorded": true
+    },
+    {
+      "verb": "POST",
+      "path": "/v1/users/sign_in",
+      "versions": [
+        "1"
+      ],
+      "query": "user%5Bemail%5D=wrong+email&user%5Bpassword%5D=12345678",
+      "request_data": "",
+      "response_data": {
+        "errors": {
+          "base": [
+            "Invalid email or password."
+          ]
+        }
+      },
+      "code": 401,
+      "show_in_doc": 1,
+      "recorded": true
+    }
+  ]
+}

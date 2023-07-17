@@ -9,6 +9,7 @@ ruby "3.2.1"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
 
 gem "active_model_serializers"
+gem "apipie-rails"
 gem "devise"
 gem "devise-jwt"
 gem "dry-monads"

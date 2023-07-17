@@ -58,6 +58,7 @@ module LearningTexts
         learning_text: {
           title: 1,
           translation_title: 2,
+          level: "B1",
           sentences: [
             { translation: "Translated sentence 1" },
             { base: "Sentence 2" }
