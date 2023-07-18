@@ -44,6 +44,8 @@ module LearningTexts
             translation_title: "translated title",
             level: "B1",
             visibility: "",
+            base_language: "pl",
+            translation_language: "en",
             sentences: [
               { base: "Sentence 1", translation: "Translated sentence 1" },
               { base: "Sentence 2", translation: "Translated sentence 2" }
@@ -59,6 +61,8 @@ module LearningTexts
           title: 1,
           translation_title: 2,
           level: "B1",
+          base_language: "pl",
+          translation_language: "en",
           sentences: [
             { translation: "Translated sentence 1" },
             { base: "Sentence 2" }

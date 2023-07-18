@@ -24,10 +24,6 @@ module TransLinkApi
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    # Fix for devise issue with ActionDispatch::Request::Session::DisabledSessionError
-    # https://github.com/waiting-for-dev/devise-jwt/issues/235
-    config.session_store :cookie_store, key: "_interslice_session"
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use config.session_store, config.session_options
+    config.session_store :disabled
   end
 end
