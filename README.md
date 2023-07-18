@@ -1,24 +1,22 @@
-# README
+# TransLinkApi
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### How to set it up:
 
-Things you may want to cover:
+1. Put `master.key` in `/config`
+2. Run containers
+```shell
+docker build
+docker-compose up
+```
+3. Connect to app container
+```shell
+docker exec -it trans-link-api-web-1 /bin/sh
+```
+4. Setup database
+```shell
+rails db:setup
+```
 
-* Ruby version
+Api docs should be available under: http://localhost:3000/api_docs/
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Requests examples: `doc\apipie_examples.json`

@@ -7,7 +7,4 @@ Apipie.configure do |config|
   config.api_controllers_matcher = Rails.root.join("/app/controllers/**/*.rb")
 
   config.validate = false
-
-  config.show_all_examples = true
-  config.default_version = "1"
 end
